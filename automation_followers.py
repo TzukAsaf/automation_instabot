@@ -16,7 +16,6 @@ driver.get("https://www.instagram.com/")
 
 time.sleep(1)
 
-
 went_wrong = True
 while went_wrong:
     try:
