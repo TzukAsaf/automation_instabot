@@ -96,9 +96,6 @@ time.sleep(1)
 search.send_keys(Keys.RETURN)
 search.send_keys(Keys.ENTER)
 
-
-#driver.execute_script("arguments[0].click();",
-                      #driver.find_element_by_xpath("/html/body/div[1]/section/main/div/header/section/ul/li[3]/a"))
 time.sleep(3)
 
 ig_source = requests.get("https://www.instagram.com/js_executor/").text
