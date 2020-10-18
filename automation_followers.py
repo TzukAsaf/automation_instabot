@@ -9,6 +9,9 @@ import keyboard
 
 
 def followers_list():
+    #will return list of names of followers
+    driver.execute_script("arguments[0].click();",
+                          driver.find_element_by_xpath("/html/body/div[1]/section/main/div/header/section/ul/li[3]/a"))
     followers = []
     time.sleep(1)
     followersList = driver.find_element_by_xpath("/html/body/div[4]/div/div/div[2]")
@@ -19,7 +22,9 @@ def followers_list():
             userLink = user.find_element_by_css_selector('a').get_attribute('title')
 
         followers.append(userLink)
-        return followers
+    return followers
+
+
 def follow_person(username):
     # at the end you will be at your profile
     search_person = driver.find_element_by_xpath("/html/body/div[1]/section/nav/div[2]/div/div/div[2]/input")
@@ -54,9 +59,9 @@ while went_wrong:
     try:
         went_wrong = False
         user_name = input("Enter your Username: ")
-        driver.find_element_by_name("username").send_keys("js_executor")
+        driver.find_element_by_name("username").send_keys(user_name)
         user_pass = input("Enter your Password: ")
-        driver.find_element_by_name("password").send_keys("abyssal2484551")
+        driver.find_element_by_name("password").send_keys(user_pass)
         login = driver.find_element_by_xpath(
             "/html/body/div[1]/section/main/article/div[2]/div[1]/div/form/div/div[3]/button/div")
         login.click()
@@ -80,16 +85,16 @@ time.sleep(1)
 driver.execute_script("arguments[0].click();", driver.find_element_by_xpath(
     "/html/body/div[4]/div/div/div/div[3]/button[2]"))  # To get rid of the "turn on notification" pop-up
 
-search_the_hashtag = driver.find_element_by_xpath("/html/body/div[1]/section/nav/div[2]/div/div/div[2]/input")
-search_the_hashtag.send_keys("js_executor")
+search = driver.find_element_by_xpath("/html/body/div[1]/section/nav/div[2]/div/div/div[2]/input")
+search.send_keys("js_executor")
 time.sleep(1)
 
-search_the_hashtag.send_keys(Keys.RETURN)
-search_the_hashtag.send_keys(Keys.ENTER)
+search.send_keys(Keys.RETURN)
+search.send_keys(Keys.ENTER)
 
-time.sleep(1)
-driver.execute_script("arguments[0].click();",
-                      driver.find_element_by_xpath("/html/body/div[1]/section/main/div/header/section/ul/li[3]/a"))
+
+#driver.execute_script("arguments[0].click();",
+                      #driver.find_element_by_xpath("/html/body/div[1]/section/main/div/header/section/ul/li[3]/a"))
 time.sleep(3)
 
 ig_source = requests.get("https://www.instagram.com/js_executor/").text
@@ -98,7 +103,10 @@ following_amount = re.findall(comp, ig_source)
 total_following = int(str(following_amount[0]).split()[0])
 
 lst_all_followers = followers_list()
-while not keyboard.is_pressed('q'):
+print(lst_all_followers)
+
+print("press 'q' anytime you want to exit")
+while not keyboard.is_pressed("q"):
 
     starting_time = time.perf_counter()
     went_wrong = 0
@@ -114,7 +122,6 @@ while not keyboard.is_pressed('q'):
 
                 driver.find_element_by_xpath("/html/body/div[5]/div/div/div/div[3]/button[1]").click()
             except (NoSuchElementException, ElementClickInterceptedException):
-                print("something went wrong...")
                 went_wrong = True
                 break
 
@@ -144,10 +151,18 @@ while not keyboard.is_pressed('q'):
 
         time.sleep(900)
         print(f"waited {(time.perf_counter() - ending_time) / 60} minutes")
+
+# in case somehow there are missing followers from the beginning
 driver.refresh()
 time.sleep(4)
 lst_current_followers = followers_list()
+print(lst_all_followers)
+print(lst_current_followers)
 for user in lst_all_followers:
     if user not in lst_current_followers:
         follow_person(user)
+        print(f"Followed {user}")
+    time.sleep(2)
+
+driver.quit()
 
