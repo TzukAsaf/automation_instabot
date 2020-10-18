@@ -20,8 +20,6 @@ def followers_list():
 
         followers.append(userLink)
         return followers
-
-
 def follow_person(username):
     # at the end you will be at your profile
     search_person = driver.find_element_by_xpath("/html/body/div[1]/section/nav/div[2]/div/div/div[2]/input")
