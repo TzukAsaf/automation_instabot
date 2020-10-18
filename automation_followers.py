@@ -59,9 +59,13 @@ while went_wrong:
     try:
         went_wrong = False
         user_name = input("Enter your Username: ")
+
         driver.find_element_by_name("username").send_keys(user_name)
         user_pass = input("Enter your Password: ")
         driver.find_element_by_name("password").send_keys(user_pass)
+
+        
+
         login = driver.find_element_by_xpath(
             "/html/body/div[1]/section/main/article/div[2]/div[1]/div/form/div/div[3]/button/div")
         login.click()
