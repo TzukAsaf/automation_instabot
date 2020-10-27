@@ -64,8 +64,6 @@ while went_wrong:
         user_pass = input("Enter your Password: ")
         driver.find_element_by_name("password").send_keys(user_pass)
 
-        
-
         login = driver.find_element_by_xpath(
             "/html/body/div[1]/section/main/article/div[2]/div[1]/div/form/div/div[3]/button/div")
         login.click()
@@ -73,7 +71,7 @@ while went_wrong:
 
         driver.execute_script("arguments[0].click();", driver.find_element_by_xpath(
             "/html/body/div[1]/section/main/div/div/div/div/button"))  # To get rid of the "save your logging info" pop-up
-        time.sleep(1)
+        time.sleep(2)
 
     except (NoSuchElementException, ElementClickInterceptedException):
         went_wrong = True
@@ -104,11 +102,9 @@ following_amount = re.findall(comp, ig_source)
 total_following = int(str(following_amount[0]).split()[0])
 
 lst_all_followers = followers_list()
-print(lst_all_followers)
 
-print("press 'q' anytime you want to exit")
+print("press 'q' button anytime you want to exit")
 while not keyboard.is_pressed("q"):
-
     starting_time = time.perf_counter()
     went_wrong = 0
     print("starting new round")
